@@ -1,4 +1,5 @@
 <?php 
+sleep(1);
 require"../function.php";
 
 $keyword = $_GET["Keyword"];
@@ -11,7 +12,17 @@ $que = "SELECT * FROM product_laptops WHERE
 			";
 $laptop = query($que);
 
+
+
  ?>
+<style>
+	.notfound{
+		line-height: 200px!important;
+		font-size: 60px;
+		font-style: italic;
+		font-weight: 300;
+	}
+</style>
 
 <table class="table table-hover">
       <tr>
@@ -24,9 +35,12 @@ $laptop = query($que);
         <th scope="col">RAM</th>
         <th scope="col">VGA</th>
       </tr>
-    
+	  <?php if ( count($laptop) === 0 ): ?>
+	  	<tr>
+	  		<td colspan="8"><h1 class="text-center notfound">Laptop tidak tersedia</h1></td>
+	  	</tr>
+	  <?php endif; ?>		
         <?php $i = 1; ?>
-
         <?php foreach($laptop as $lap) :?>
         <tr>
           <td scope="row"><?= $i; ?></td>
@@ -43,5 +57,6 @@ $laptop = query($que);
         </tr>
         <?php $i++ ?>
         <?php endforeach ?>
+
 
     </table>

@@ -1,20 +1,26 @@
-let keyword = document.getElementById("Keyword");
-
-let table = document.getElementById("container");
-
-keyword.addEventListener("keyup",function(){
+$(document).ready(function(){
 
 
-	// Template ajax
-	console.log(keyword.value);
-		let ajax = new XMLHttpRequest();
+	$("#search").hide();
+	$("#Keyword").on("keyup",function(){
 
-		ajax.onreadystatechange = function(){
-			if ( ajax.readyState == 4  && ajax.status == 200 ){
-				table.innerHTML = ajax.responseText;
-			}
-		}
+		// menggunakan load untuk memanggil ajax
+		// $("#container").load("ajax/laptop.php?Keyword="+$("#Keyword").val());	
+         $(".loader").css({
+				"opacity" : "1"
+			});     
 
-		ajax.open("GET" , "ajax/laptop.php?Keyword="+keyword.value,true);
-		ajax.send();
+
+		// menggunakan $.get untuk memanggil ajax
+		$.get("ajax/laptop.php?Keyword="+$("#Keyword").val() , function(ajax){
+
+			$("#container").html(ajax);
+			$(".loader").css({
+				"opacity" : "0"
+			});
+
+		
+		});	
+
+	});   
 });

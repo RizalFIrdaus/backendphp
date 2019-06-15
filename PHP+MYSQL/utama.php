@@ -32,6 +32,13 @@ if ( isset($_POST["search"]) ){
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap-4.3.1/css/bootstrap.css">
     <title>Laptop Product</title>
+    <style>
+      .loader{
+        width: 40px;
+        opacity: 0;
+
+      }
+    </style>
   </head>
   <body>
 
@@ -44,7 +51,8 @@ if ( isset($_POST["search"]) ){
         <a href="logout.php" class="badge badge-primary add">Logout</a>
         <form class="form-inline" method="post">
           <input class="form-control mr-sm-2" type="search" placeholder="Search" name="Keyword" aria-label="Search" autocomplete="off" autofocus id="Keyword">
-          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" name="search">Search</button>
+          <img src="img/loader.gif" class="loader">
+          <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" name="search" id="search">Search</button>
         </form>
       </nav>
       <div id="container">
@@ -84,6 +92,7 @@ if ( isset($_POST["search"]) ){
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>
