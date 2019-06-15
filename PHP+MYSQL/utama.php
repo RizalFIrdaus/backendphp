@@ -9,36 +9,9 @@ if( !isset($_SESSION["login"]) ){
 
 
 require"function.php";
-
-// Pegination
-if ( !isset($_POST["search"])){
-$halamanTampil = 5;
-$jmlData = count(query("SELECT * FROM product_laptops"));
-$jmlHalaman = ceil($jmlData / $halamanTampil) ;
-if ( isset($_GET["page"]) ){
-  $halamanAktif = $_GET["page"];
-}else{
-  $halamanAktif = 1;
-}
-$dataAwal = ($halamanTampil * $halamanAktif ) - $halamanTampil;
-$laptop = query("SELECT * FROM product_laptops LIMIT $dataAwal , $halamanTampil");
-}
-
-
+$laptop = query("SELECT * FROM product_laptops ");
 // Search
 if ( isset($_POST["search"]) ){
-  $halamanTampil = 5;
-  
-  if ( isset($_GET["page"]) ){
-    $halamanAktif = $_GET["page"];
-  }else{
-    $halamanAktif = 1;
-  }
-  $dataAwal = ($halamanTampil * $halamanAktif ) - $halamanTampil;
-  $laptop = query("SELECT * FROM product_laptops ");
-  
-   $jmlData = count($laptop);
-    $jmlHalaman = ceil($jmlData / $halamanTampil);
     
   $laptop = search($_POST["Keyword"]);
 
@@ -58,24 +31,6 @@ if ( isset($_POST["search"]) ){
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap-4.3.1/css/bootstrap.css">
-    <style>
-      .pagination{
-        margin-right: auto;
-        margin-left: auto;
-        padding: 10px;
-      }
-      .pagination button a {
-        color: white;
-        text-decoration: none;
-
-      }
-      .gtlt{
-        font-size: 30px;
-        margin-top: -7px;
-        margin-left: 10px; 
-        margin-right: 10px;
-      }
-    </style>
     <title>Laptop Product</title>
   </head>
   <body>
@@ -109,7 +64,7 @@ if ( isset($_POST["search"]) ){
 
             <?php foreach($laptop as $lap) :?>
             <tr>
-              <td scope="row"><?= $i+$dataAwal; ?></td>
+              <td scope="row"><?= $i; ?></td>
               <td><img src="img/<?= $lap["gambar"]; ?>" width="200" class="img-thumbnail"></td>
               <td class="edit">
                 <a href="update.php?id=<?= $lap["id"]; ?>" class="badge badge-primary">Ubah</a> |
@@ -126,34 +81,6 @@ if ( isset($_POST["search"]) ){
 
         </table>
     </div>
-    <!-- pagination -->
-
-    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-      <div class="btn-group pagination" role="group" aria-label="First group">
-        <?php if ( !isset($_POST["search"]) ): ?>
-            <?php if($halamanAktif > 1) :?>
-              <a href="?page=<?= $halamanAktif-1 ?>" class="gtlt">&laquo;</a>
-            <?php endif; ?>
-            
-            <?php for($i = 1 ; $i <= $jmlHalaman; $i++) :?>
-              <?php if($i == $halamanAktif): ?>
-              <a href="?page=<?= $i ?>"><button type="button" class="btn btn-primary" style="background-color: #0056D8"><?= $i ?></button></a>
-              <?php else : ?>
-              <a href="?page=<?= $i ?>"><button type="button" class="btn btn-primary"><?= $i ?></button></a>
-              <?php endif; ?>
-            <?php endfor ;?>
-
-            <?php if($halamanAktif < $jmlHalaman) :?>
-              <a href="?page=<?= $halamanAktif+1 ?>" class="gtlt">&raquo;</a>
-            <?php endif; ?>
-         <?php endif; ?> 
-      </div>
-    </div>
-  </div>
-
-
-
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
